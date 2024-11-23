@@ -1,0 +1,14 @@
+package:
+  name: purescript
+  dependencies:
+    - console
+    - effect
+    - lists
+    - prelude
+  test:
+    main: Test.Main
+    dependencies: []
+workspace:
+  packageSet:
+    registry: 61.1.0
+  extraPackages: {}
