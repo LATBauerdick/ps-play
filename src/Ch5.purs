@@ -3,6 +3,7 @@ module Ch5 where
 import Prelude ( Unit, (+), show, discard )
 
 import Data.List ( List(..), (:) )
+import Data.Maybe ( Maybe(..) )
 import Effect ( Effect )
 import Effect.Console ( log )
 
@@ -37,6 +38,26 @@ length l = go 0 l where
   go acc Nil = acc
   go acc (_ : xs) = go (acc + 1) xs
 
+head :: forall a. List a -> Maybe a
+head Nil = Nothing
+head (x : _) = Just x
+
+tail :: forall a. List a -> Maybe ( List a )
+tail Nil = Nothing
+tail (_ : xs) = Just xs
+
+last :: forall a. List a -> Maybe a
+last Nil = Nothing
+last (x : Nil) = Just x
+last (x : xs) = last xs
+
+init :: forall a. List a -> Maybe ( List a )
+init Nil = Nothing
+init l = Just $ go l where
+  go Nil = Nil
+  go (_ : Nil) = Nil
+  go (x : xs) = x : go xs
+
 test :: Effect Unit
 test = do
   log $ show $ flip const 1 2
@@ -46,3 +67,13 @@ test = do
   log $ show $ null ( "abc" : Nil )
   log $ show $ snoc ( 1 : 2 : Nil ) 3
   log $ show $ length $ 1 : 2 : 3 : Nil
+  log $ show $ head (Nil :: List Unit)
+  log $ show $ head ("abc" : "123" : Nil)
+  log $ show $ tail (Nil :: List Unit)
+  log $ show $ tail ("abc" : "123" : Nil)
+  log $ show $ last (Nil :: List Unit)
+  log $ show $ last ("abc" : "123" : Nil)
+  log $ show $ init (Nil :: List Unit)
+  log $ show $ init (1 : Nil)
+  log $ show $ init (1 : 2 : Nil)
+  log $ show $ init (1 : 2 : 3 : Nil)

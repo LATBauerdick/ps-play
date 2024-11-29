@@ -8,7 +8,9 @@
             "console",
             "effect",
             "lists",
-            "prelude"
+            "maybe",
+            "prelude",
+            "tuples"
           ],
           "build_plan": [
             "bifunctors",
